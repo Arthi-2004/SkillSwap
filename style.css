@@ -1,0 +1,233 @@
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Body */
+body {
+  background-color: #fefefe;
+  color: #2c3e50;
+  line-height: 1.6;
+}
+
+/* Navigation */
+nav {
+  background: #ffffff;
+  padding: 15px 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav a {
+  color: #0077b6;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(to right, #cfd9df, #e2ebf0);
+  color: #2c3e50;
+}
+
+.logo {
+  width: 80px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 3.2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.cta-button {
+  display: inline-block;
+  background: #90e0ef;
+  color: #023047;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background: #caf0f8;
+}
+
+/* Form Section */
+.signup-section {
+  max-width: 550px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+}
+
+.signup-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #0077b6;
+  font-size: 1.8rem;
+}
+
+form input,
+form select,
+form textarea {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #f8f9fa;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+form button {
+  width: 100%;
+  padding: 14px;
+  background: #00b4d8;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+form button:hover {
+  background: #0096c7;
+}
+
+#matchResult {
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Match Box */
+.match-box {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #e7f9f6;
+  border: 2px solid #b2dfdb;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.05rem;
+  color: #00695c;
+}
+
+/* Cards Grid Container */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+  padding: 0 15px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Learner Card */
+.learner-card {
+  background-color: #f1faff;
+  border: 1px solid #dceefb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s;
+}
+
+.learner-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Latest Joiners */
+.latest-joiners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin: 30px auto 0;
+  padding: 20px;
+  max-width: 1000px;
+  box-sizing: border-box;
+}
+
+.joiner-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.joiner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.joiner-card strong {
+  display: block;
+  font-size: 18px;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.joiner-card em {
+  font-style: normal;
+  color: #3a7bd5;
+  font-weight: 500;
+}
+
+.joiner-card p {
+  margin: 6px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .signup-section {
+    padding: 20px;
+    margin: 40px 15px;
+  }
+
+  nav {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}

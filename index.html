@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillSwap – Share What You Know</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="requests.html">Browse Requests</a>
+    <a href="offer.html">Offer a Skill</a>
+    <a href="offers.html">Skill Offers</a>
+    <a href="community.html">Community</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <img src="assests/Logo.png" alt="SkillSwap Logo" class="logo" />
+    <h1>SkillSwap</h1>
+    <p>Peer-to-peer skill sharing. No fees — just people helping people.</p>
+    <a href="#signup" class="cta-button">Get Started</a>
+  </header>
+
+  <!-- Sign Up Form Section -->
+  <section id="signup" class="signup-section">
+    <h2>Join the SkillSwap Community</h2>
+    <form id="skillForm">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="text" id="teach" placeholder="Skill You Can Share" required />
+      <input type="text" id="learn" placeholder="Skill You Want to Explore" required />
+      <button type="submit">Find a Match</button>
+    </form>
+    <div id="matchResult"></div>
+  </section>
+
+  <!-- Latest Joiners Section -->
+  <div id="userList" class="latest-joiners-grid"></div>
+
+  <script>
+    let users = JSON.parse(localStorage.getItem("communityUsers")) || [];
+
+    function saveUsers() {
+      localStorage.setItem("communityUsers", JSON.stringify(users));
+    }
+
+    function updateUserList() {
+      const container = document.getElementById("userList");
+      container.innerHTML = '';
+
+      const latest = users.slice(-6).reverse();
+      latest.forEach((user) => {
+        const card = document.createElement("div");
+        card.className = "joiner-card";
+        card.innerHTML = `
+          <strong>${user.name}</strong><br>
+          Teaches: <em>${user.teach}</em><br>
+          Wants to learn: <em>${user.learn}</em><br>
+          Status: ${user.status === "Matched" ? "✅ Matched" : "⏳ Waiting"}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById("skillForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const teach = document.getElementById("teach").value.trim();
+      const learn = document.getElementById("learn").value.trim();
+
+      const teachLower = teach.toLowerCase();
+      const learnLower = learn.toLowerCase();
+
+      const resultDiv = document.getElementById("matchResult");
+
+      let status = "Waiting";
+
+      const match = users.find(
+        (user) =>
+          user.teach.toLowerCase() === learnLower &&
+          user.learn.toLowerCase() === teachLower &&
+          user.status === "Waiting"
+      );
+
+      if (match) {
+        status = "Matched";
+        match.status = "Matched"; // Update matched user's status too
+
+        resultDiv.innerHTML = `
+          <div class="match-box">
+            🎉 <strong>Match found!</strong><br>
+            You can SkillSwap with <strong>${match.name}</strong>.<br>
+            They want to learn <strong>${teach}</strong> and can teach you <strong>${learn}</strong>!
+          </div>
+        `;
+      } else {
+        resultDiv.innerHTML = `
+          <div class="match-box" style="background-color: #ffecec; border-color: #f5c2c2; color: #b30000;">
+            ❌ No exact match found yet.<br>
+            But your entry has been added to the community!
+          </div>
+        `;
+      }
+
+      users.push({ name, teach, learn, status });
+      saveUsers();
+      updateUserList();
+
+      document.getElementById("skillForm").reset();
+    });
+
+    // On first load
+    updateUserList();
+  </script>
+
+</body>
+</html>

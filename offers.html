@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Available Skill Offers – SkillSwap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="requests.html">Browse Requests</a>
+    <a href="offer.html">Offer a Skill</a>
+    <a href="offers.html">Skill Offers</a>
+    <a href="community.html">Community</a>
+  </nav>
+
+  <section class="signup-section">
+    <h2>📦 Available Skill Offers</h2>
+    <div id="teacherCards" class="card-container"></div>
+  </section>
+
+  <script>
+    const container = document.getElementById("teacherCards");
+    const allUsers = JSON.parse(localStorage.getItem("communityUsers")) || [];
+
+    // Filter users who have a skill to teach (from either offer.html or signup)
+    const offers = allUsers.filter(user =>
+      user.teach &&
+      user.teach.trim() !== "" &&
+      ["OfferOnly", "Waiting", "Matched"].includes(user.status)
+    );
+
+    if (offers.length === 0) {
+      container.innerHTML = "<p>No skill offers yet. Be the first to <a href='offer.html'>add yours</a>!</p>";
+    } else {
+      offers.slice().reverse().forEach(user => {
+        const card = document.createElement("div");
+        card.className = "learner-card";
+        card.innerHTML = `
+          <h3>${user.name}</h3>
+          <p><strong>Skill Offered:</strong> ${user.teach}</p>
+          ${user.experience ? `<p><strong>Experience Level:</strong> ${user.experience}</p>` : ""}
+          ${user.bio ? `<p><strong>Sharing Note:</strong> ${user.bio}</p>` : ""}
+          <p><strong>Status:</strong> ${
+            user.status === "Matched"
+              ? "✅ Matched"
+              : user.status === "OfferOnly"
+              ? "📦 Offer Only"
+              : "⏳ Waiting"
+          }</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>

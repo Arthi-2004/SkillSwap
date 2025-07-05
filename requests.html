@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Skill Requests – SkillSwap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="requests.html">Browse Requests</a>
+    <a href="offer.html">Offer a Skill</a>
+    <a href="offers.html">Skill Offers</a>
+    <a href="community.html">Community</a>
+  </nav>
+
+  <section class="signup-section">
+    <h2>📚 Browse Skill Requests</h2>
+    <div id="requestCards" class="card-container"></div>
+  </section>
+
+  <script>
+    const container = document.getElementById("requestCards");
+    const community = JSON.parse(localStorage.getItem("communityUsers")) || [];
+
+    // Only show users who want to learn, have valid entries, and are still "Waiting"
+    const waitingUsers = community.filter(user =>
+      user.status === "Waiting" &&
+      user.learn.trim() !== ""
+    );
+
+    if (waitingUsers.length === 0) {
+      container.innerHTML = `<p>No skill requests yet. Be the first to <a href="index.html">join the community</a>!</p>`;
+    } else {
+      waitingUsers.slice().reverse().forEach(user => {
+        const card = document.createElement("div");
+        card.className = "learner-card";
+        card.innerHTML = `
+          <h3>${user.name}</h3>
+          <p><strong>Wants to learn:</strong> ${user.learn}</p>
+          <p><strong>Can share:</strong> ${user.teach}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>

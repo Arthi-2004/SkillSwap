@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Community Board – SkillSwap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="requests.html">Browse Requests</a>
+    <a href="offer.html">Offer a Skill</a>
+    <a href="offers.html">Skill Offers</a>
+    <a href="community.html">Community</a>
+  </nav>
+
+  <section class="signup-section">
+    <h2>🌍 SkillSwap Community Board</h2>
+    <div id="communityList" class="card-container"></div>
+  </section>
+
+  <script>
+    const container = document.getElementById("communityList");
+    const community = JSON.parse(localStorage.getItem("communityUsers")) || [];
+
+    // Filter out bad entries with no name or no teach skill
+    const validUsers = community.filter(user =>
+      user.name && user.name.trim() !== "" &&
+      user.teach && user.teach.trim() !== ""
+    );
+
+    if (validUsers.length === 0) {
+      container.innerHTML = "<p>No entries yet. Be the first to <a href='index.html'>join SkillSwap</a>!</p>";
+    } else {
+      validUsers.slice().reverse().forEach((user) => {
+        const name = user.name || "Anonymous";
+        const teach = user.teach || "—";
+        const learn = user.learn && user.learn.trim() !== "" ? user.learn : "—";
+        const statusLabel = user.status === "Matched"
+          ? "✅ Matched"
+          : user.status === "OfferOnly"
+          ? "📦 Offer Only"
+          : "⏳ Waiting";
+
+        const card = document.createElement("div");
+        card.className = "learner-card";
+        card.innerHTML = `
+          <h3>${name}</h3>
+          <p><strong>Can Share:</strong> ${teach}</p>
+          <p><strong>Wants to Learn:</strong> ${learn}</p>
+          <p><strong>Status:</strong> ${statusLabel}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>

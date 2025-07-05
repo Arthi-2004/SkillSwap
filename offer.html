@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Offer a Skill – SkillSwap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="requests.html">Browse Requests</a>
+    <a href="offer.html">Offer a Skill</a>
+    <a href="offers.html">Skill Offers</a>
+    <a href="community.html">Community</a>
+  </nav>
+
+  <section class="signup-section">
+    <h2>🤝 Offer a Skill</h2>
+    <form id="teachForm">
+      <input type="text" id="teacherName" placeholder="Your Name" required />
+      <input type="text" id="teachSkill" placeholder="Skill You Want to Share" required />
+      <select id="experience" required>
+        <option value="">Experience Level</option>
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate">Intermediate</option>
+        <option value="Expert">Expert</option>
+      </select>
+      <textarea id="bio" placeholder="Write a short note on how you share or teach this skill" rows="3" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+
+    <div id="teachResult" style="margin-top: 20px;"></div>
+  </section>
+
+  <script>
+    document.getElementById("teachForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("teacherName").value.trim();
+      const teach = document.getElementById("teachSkill").value.trim();
+      const experience = document.getElementById("experience").value;
+      const bio = document.getElementById("bio").value.trim();
+
+      if (!name || !teach || !experience || !bio) return;
+
+      const newOffer = {
+        name,
+        teach,
+        learn: "", // No learning request
+        experience,
+        bio,
+        status: "OfferOnly"
+      };
+
+      let community = JSON.parse(localStorage.getItem("communityUsers")) || [];
+      community.push(newOffer);
+      localStorage.setItem("communityUsers", JSON.stringify(community));
+
+      document.getElementById("teachResult").innerHTML = `
+        ✅ <strong>${name}</strong>, your offer "<strong>${teach}</strong>" was added to the community!
+        <br>Check it out on <a href="offers.html">Skill Offers</a>.
+      `;
+
+      document.getElementById("teachForm").reset();
+    });
+  </script>
+</body>
+</html>
